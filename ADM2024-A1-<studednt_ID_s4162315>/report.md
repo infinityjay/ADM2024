@@ -211,15 +211,57 @@ Compare the DBMS, it is obvious that the performance of MonetDB is far more effi
 
 ## 5. Implementation of the queries in Python
 
+I use Python to implement the q01.sql and q06.sql on SF-1 and SF-3 dataset. All of the code can be seen in the attachment named as `implementation.ipynb`.
+
 ### 5.1 Implement q06.sql and q01.sql on SF-1 dataset
+
+SF-1 dataset has a relatively small size, so I implement these sql scripts on SF-1 dataset.
+
+#### 5.1.1 Methods
+
+I use the similar method to implement q06.sql and q01.sql.
+
+* Step1
+
+  Load data to a data frame from `lineitm.tbl` file to make sure the data exist in the memory instead of the disk.
+
+* Step 2
+
+  Use the filter conditions in data frame which is the same as in the sql script. Filter the data and calculate the final results.
+
+* Step 3
+
+  Set start time before the query and end time after the query. The execution time will be the deviation of start time and end time.
+
+* Result
+
+  Finally, I get the same results as in the correct result file. 
+
+* Execution time
+
+  The best execution time of q06.sql implementation is about 60ms which is very close to the MonetDB. And the excution time of q01.sql implementation is about 1580ms.
+
+#### 5.1.2 Verify the results of q01.sql implementation
+
+I store the result of q01.sql implementation in a data frame.
+
+* Step 1
+
+  Load the correct results into the data frame from the csv file.
+
+* Step 2
+
+  Transfer all of the number elements in both data frames into 2 decimal numbers.
+
+* Step 3
+
+  Compare all of the values of the correct results and query results. If all value are equal, I can verity the results of q01.sql implementation is correct.
+
+### 5.2 Implement q06.sql and q01.sql on SF-3 dataset
 
 #### 5.1.1 Methods
 
 #### 5.1.2 Query time
-
-#### 5.1.3 Verify the results of q01.sql
-
-### 5.2 Implementation q01.sql on SF-3 dataset
 
 
 
