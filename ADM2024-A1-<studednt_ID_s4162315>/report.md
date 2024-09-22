@@ -12,23 +12,29 @@ The group number is 6.
 
 ## 1. Introduction
 
- 
-
- 
+ This task is using the TPC-H benchmark tool to test the performance of MonetDB and one other DBMS (I use MySQL here). All of the dataset and sql scripts are provided. Also have to choose one of the programming language to implement the same query as the sql scripts (I choose Python here).
 
 ## 2. The environment for the experiment
 
 ### 2.1 Hardware environment
 
-Here is the hardware environment of my experiment, and you don't need to use the same environment as mine. 
+Here is the hardware environment of my experiment, and you don't need to use the same environment as mine. I just use my laptop MacBook pro 14-inch, 2021.
 
-* CPU: vendor, model, generation, clockspeed, cache size
+* Chip 
 
-  
+  Apple M1 Pro chip, 200GB/s memory bandwidth
+
+* CPU
+
+  Clock rate: 2064-3220MHz, 24MB Level 3 Cache
 
 * Main memory
 
-* Disk: size & speed
+  32GB
+
+* Disk
+
+  512GB SSD, 4900 MB/s read speed and 3951 MB/s write speed
 
 ### 2.2 Software environment
 
@@ -259,25 +265,44 @@ I store the result of q01.sql implementation in a data frame.
 
 ### 5.2 Implement q06.sql and q01.sql on SF-3 dataset
 
-#### 5.1.1 Methods
-
-#### 5.1.2 Query time
-
-
-
- 
+For SF-3 dataset, I use the same methods, and also get the correct results as the correct results. The best execution time of q06.sql implementation is about 159ms. And the excution time of q01.sql implementation is about 6427ms. 
 
 ## 6. Performance comparison between DBMS and Python implementation
 
- 
+### 6.1 Visualisation 
 
- 
+Create the table with all of the previous
 
- 
+| Query | Tool    | Dataset | Execution time/ms |
+| ----- | ------- | ------- | ----------------- |
+| q01   | MonetDB | SF1     | 174               |
+| q06   | MonetDB | SF1     | 50                |
+| q01   | MonetDB | SF3     | 395               |
+| q06   | MonetDB | SF3     | 62                |
+| q01   | MySQL   | SF1     | 6120              |
+| q06   | MySQL   | SF1     | 1383              |
+| q01   | MySQL   | SF3     | 20760             |
+| q06   | MySQL   | SF3     | 6683              |
+| q01   | Python  | SF1     | 1580              |
+| q06   | Python  | SF1     | 60                |
+| q01   | Python  | SF3     | 6427              |
+| q06   | Python  | SF3     | 159               |
 
- 
+Then I plot all of the execution time with each tool and dataset.
 
- 
+![image-20240922231628785](https://raw.githubusercontent.com/infinityjay/myImageHost/main/typora/image-20240922231628785.png)
+
+![image-20240922231642547](https://raw.githubusercontent.com/infinityjay/myImageHost/main/typora/image-20240922231642547.png)
+
+
+
+###  6.2 Analysis of the performance
+
+According to the above figures, we can find MonetDB is still the most efficient tool and the performance of Python on q06 are close to MonetDB. But Python perform really bad on q01 which is still better than MySQL. 
+
+The bad performance of Python on the q01 has many causes. One of that is the more complex filter conditions in dataframe can largely affect the performance. And at the final step, the result also need to be sorted. The build in sort algorithm of data frame maybe not so efficient.
+
+However, the MySQL is till the worst one compared to Python. I think the main reason can be the data frame treat the data as a matrix, and it also build the column index. In some situation, the data frame can be seen as a column oriented tool which has a better performance than the row oriented tool. 
 
 ## *Appendix
 
