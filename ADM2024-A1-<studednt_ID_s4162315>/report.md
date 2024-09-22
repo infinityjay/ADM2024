@@ -205,11 +205,23 @@ Then I plot the results to compare the execution time with different queries and
 
 ![image-20240922202656154](https://raw.githubusercontent.com/infinityjay/myImageHost/main/typora/image-20240922202656154.png)
 
-From the figures above, we can find that for MonetDB, the query 1 is the most time consuming. For MySQL, the query performance are very unstable
+From the figures above, we can find that for MonetDB, the query 1 is the most time consuming. For MySQL, the query performance are very unstable on different datasets. For example, in the SF1 dataset, the query02 consumes least time, but in SF3, the query02 consumes the most time. And there is no specific pattern between the queries.
+
+Compare the DBMS, it is obvious that the performance of MonetDB is far more efficient than MySQL in both dataset. As the dataset size increasing, the performance gap between these two DBMSs become larger. The divition of the cosuming time on SF3 is $10^3$ and on SF1 is only $10$. With larger dataset, the advantages of MonetDB is greater than MySQL.
 
 ## 5. Implementation of the queries in Python
 
- 
+### 5.1 Implement q06.sql and q01.sql on SF-1 dataset
+
+#### 5.1.1 Methods
+
+#### 5.1.2 Query time
+
+#### 5.1.3 Verify the results of q01.sql
+
+### 5.2 Implementation q01.sql on SF-3 dataset
+
+
 
  
 
