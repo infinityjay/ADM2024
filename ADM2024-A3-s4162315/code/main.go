@@ -4,6 +4,7 @@ import (
 	"ADM2024/pkg/common"
 	"fmt"
 	"github.com/spf13/pflag"
+	"time"
 )
 
 func main() {
@@ -30,9 +31,13 @@ func run() error {
 		return err
 	}
 
+	startTime := time.Now().Second()
 	if err := common.Execute(mode, tech, datatype, filepath); err != nil {
 		return err
 	}
+	endTime := time.Now().Second()
+	executionTime := endTime - startTime
+	fmt.Printf("The execution time of %s file with %s technique is: %d s.\n", mode, tech, executionTime)
 
 	return nil
 }

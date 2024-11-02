@@ -1,6 +1,7 @@
 package compression
 
 func DecodeBinary(datatype, filepath string) error {
+
 	return nil
 }
 
