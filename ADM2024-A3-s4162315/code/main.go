@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/spf13/pflag"
+	"os/exec"
 	"time"
 )
 
@@ -34,6 +35,7 @@ func run() error {
 		return err
 	}
 
+	// run the encode/decode and get execution time
 	startTime := time.Now().UnixMilli()
 	if err := execute(mode, tech, datatype, filepath); err != nil {
 		return err
@@ -41,6 +43,17 @@ func run() error {
 	endTime := time.Now().UnixMilli()
 	executionTime := endTime - startTime
 	fmt.Printf("The execution time of %s file with %s technique is: %d ms.\n", mode, tech, executionTime)
+
+	// decode: compare the difference of original csv and decoded csv files
+	if mode == "de" {
+		originalFilePath := filepath[:len(filepath)-4]
+		decodedFilePath := filepath + ".csv"
+		output, err := exec.Command("diff", originalFilePath, decodedFilePath).Output()
+		if err != nil {
+			return err
+		}
+		fmt.Printf("The difference between original csv file and decoded file:\n %s \n", output)
+	}
 
 	return nil
 }
