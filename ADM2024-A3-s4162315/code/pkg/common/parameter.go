@@ -4,7 +4,10 @@ import (
 	"fmt"
 )
 
-const EndOfMap = "END_OF_DICTIONARY"
+const (
+	EndOfMap = "END_OF_DICTIONARY"
+	Infinity = int(^uint(0) >> 1)
+)
 
 func ValidateDataType(tech string, dataType string) error {
 	integerTypes := map[string]bool{"int8": true, "int16": true, "int32": true, "int64": true}

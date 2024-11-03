@@ -57,50 +57,50 @@ Other dependencies versions is listed in go.mod
 
 *Compression ratio = uncompressed file size / compressed file size
 
-| Compression tech | Input file name         | Input file size(MB) | Output file size(MB) | Compression ratio* | Encode  time(ms) | Decode time(ms) |
-| ---------------- | ----------------------- | ------------------- | -------------------- | ------------------ | ---------------- | --------------- |
-| bin              | l_discount-int8.csv     | 11.97               | 7.87                 | 1.52               | 581              | 276             |
-| bin              | l_discount-int16.csv    | 11.97               | 7.87                 | 1.52               | 617              | 256             |
-| bin              | l_discount-int32.csv    | 11.97               | 7.87                 | 1.52               | 600              | 274             |
-| bin              | l_discount-int64.csv    | 11.97               | 7.87                 | 1.52               | 597              | 273             |
-| bin              | l_orderkey-int32.csv    | 44.73               | too large...         |                    |                  |                 |
-| bin              | l_partkey-int64.csv     | 36.88               | 143081.62            | 0.00               | 141873           | Super long..    |
-| bin              | l_tax-int8.csv          | 11.45               | 6.44                 | 1.78               | 505              | 248             |
-| rle              | l_comment-string.csv    | 157.35              | 302.39               | 0.52               | 16079            | 12082           |
-| rle              | l_commitdate-string.csv | 62.96               | 107.13               | 0.59               | 11369            | 10010           |
-| rle              | l_returnflag-string.csv | 11.45               | 17.17                | 0.67               | 9496             | 9333            |
-| rle              | l_discount-int8.csv     | 11.97               | 21.28                | 0.56               | 640              | 702             |
-| rle              | l_discount-int16.csv    | 11.97               | 21.28                | 0.56               | 663              | 746             |
-| rle              | l_orderkey-int32.csv    | 44.73               | 14.04                | 3.19               | 787              | 305             |
-| rle              | l_partkey-int64.csv     | 36.88               | 48.33                | 0.76               | 886              | 919             |
-| rle              | l_tax-int8.csv          | 11.45               | 20.35                | 0.56               | 647              | 718             |
-| dic              | l_comment-string.csv    | 157.35              | 204.39               | 0.77               | 4268             | 15544           |
-| dic              |                         |                     |                      |                    |                  |                 |
-| dic              |                         |                     |                      |                    |                  |                 |
-| dic              |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
+| Compression tech | Input file name               | Input file size(MB) | Output file size(MB) | Compression ratio* | Encode  time(ms) | Decode time(ms) |
+| ---------------- | ----------------------------- | ------------------- | -------------------- | ------------------ | ---------------- | --------------- |
+| bin              | l_discount-int8.csv           | 11.97               | 7.87                 | 1.52               | 581              | 276             |
+| bin              | l_discount-int16.csv          | 11.97               | 7.87                 | 1.52               | 617              | 256             |
+| bin              | l_discount-int32.csv          | 11.97               | 7.87                 | 1.52               | 600              | 274             |
+| bin              | l_discount-int64.csv          | 11.97               | 7.87                 | 1.52               | 597              | 273             |
+| bin              | l_orderkey-int32.csv          | 44.73               | too large...         |                    |                  |                 |
+| bin              | l_partkey-int64.csv           | 36.88               | 143081.62            | 0.00               | 141873           | Super long..    |
+| bin              | l_tax-int8.csv                | 11.45               | 6.44                 | 1.78               | 505              | 248             |
+| rle              | l_comment-string.csv          | 157.35              | 302.39               | 0.52               | 16079            | 12082           |
+| rle              | l_commitdate-string.csv       | 62.96               | 107.13               | 0.59               | 11369            | 10010           |
+| rle              | l_returnflag-string.csv       | 11.45               | 17.17                | 0.67               | 9496             | 9333            |
+| rle              | l_discount-int8.csv           | 11.97               | 21.28                | 0.56               | 640              | 702             |
+| rle              | l_discount-int16.csv          | 11.97               | 21.28                | 0.56               | 663              | 746             |
+| rle              | l_orderkey-int32.csv          | 44.73               | 14.04                | 3.19               | 787              | 305             |
+| rle              | l_partkey-int64.csv           | 36.88               | 48.33                | 0.76               | 886              | 919             |
+| rle              | l_tax-int8.csv                | 11.45               | 20.35                | 0.56               | 647              | 718             |
+| dic              | l_comment-string.csv          | 157.35              | 204.39               | 0.77               | 4268             | 15544           |
+| dic              | l_commitdate-string.csv       | 62.96               | 26.05                | 2.42               | 1611             | 10248           |
+| dic              | l_returnflag-string.csv       | 11.45               | 11.45                | 1.00               | 985              | 9738            |
+| dic              | l_shipinstruct-string.csv     | 74.39               | 11.45                | 6.50               | 1393             | 11590           |
+| dic              | l_shipmode-string.csv         | 30.25               | 11.45                | 2.64               | 1349             | 9773            |
+| dic              | l_discount-int8.csv           | 11.97               | 12.49                | 0.96               | 1073             | 10095           |
+| dic              | l_extendedprice-int32.csv     | 45.05               | 52.34                | 0.86               | 3576             | 15216           |
+| for              | l_discount-int8.csv           | 11.97               | 13.53                | 0.88               | 780              | 701             |
+| for              | l_extendedprice-int32.csv.for | 45.05               | 159.51               | 0.28               | 1609             | 1834            |
+| for              | l_orderkey-int32.csv          | 44.73               | 16.06                | 2.79               | 742              | 821             |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
+|                  |                               |                     |                      |                    |                  |                 |
 
 
 
