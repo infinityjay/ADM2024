@@ -17,6 +17,7 @@ func Binary(datatype, filepath string) error {
 	}
 	defer file.Close()
 
+	// read file with same schema as encoding schema
 	var numCSVRows int32
 	if err := binary.Read(file, binary.LittleEndian, &numCSVRows); err != nil {
 		return fmt.Errorf("failed to read number of bit vectors: %v", err)
@@ -26,12 +27,9 @@ func Binary(datatype, filepath string) error {
 		return fmt.Errorf("failed to read number of bit vectors: %v", err)
 	}
 
-	// Initialize bitVectorList
 	bitVectorList := make([][]byte, numVectors)
 	var vectorSize int32
-	// Read each bit vector
 	for i := int32(0); i < numVectors; i++ {
-
 		if err := binary.Read(file, binary.LittleEndian, &vectorSize); err != nil {
 			return fmt.Errorf("failed to read size of bit vector: %v", err)
 		}
@@ -47,6 +45,7 @@ func Binary(datatype, filepath string) error {
 	for value, bitVector := range bitVectorList {
 		for byteIndex, b := range bitVector {
 			for bitIndex := 0; bitIndex < 8; bitIndex++ {
+				// globalIndex use the same function as byte wide encoding, see the binary_test file
 				globalIndex := byteIndex*8 + bitIndex
 				if (b & (1 << (7 - bitIndex))) != 0 {
 					decodedValues[globalIndex] = strconv.Itoa(value)

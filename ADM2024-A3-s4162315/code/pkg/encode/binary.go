@@ -10,7 +10,7 @@ import (
 )
 
 // Binary encode binary f
-/* to save the storage use bit to create the bitVector instead of byte, run the binary_test.go file
+/* to save the storage use bit to create the bitVector instead of byte, see the binary_test.go file
 rows := []string{
 		"1", "1", "1", "2", "2", "2", "1", "1", "1", "2", "2", "2", "3", "3", "3",
 	}
