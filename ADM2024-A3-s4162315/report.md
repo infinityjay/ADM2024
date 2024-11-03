@@ -63,8 +63,9 @@ Other dependencies versions is listed in go.mod
 | bin              | l_discount-int16.csv    | 11.97               | 7.87                 | 1.52               | 617              | 256             |
 | bin              | l_discount-int32.csv    | 11.97               | 7.87                 | 1.52               | 600              | 274             |
 | bin              | l_discount-int64.csv    | 11.97               | 7.87                 | 1.52               | 597              | 273             |
-| bin              | l_orderkey-int32.csv    |                     |                      |                    |                  |                 |
-| bin              | l_partkey-int64.csv     | 36.88               | 143081.62            | 0.00               | 141873           |                 |
+| bin              | l_orderkey-int32.csv    | 44.73               | too large...         |                    |                  |                 |
+| bin              | l_partkey-int64.csv     | 36.88               | 143081.62            | 0.00               | 141873           | Super long..    |
+| bin              | l_tax-int8.csv          | 11.45               | 6.44                 | 1.78               | 505              | 248             |
 | rle              | l_comment-string.csv    | 157.35              | 302.39               | 0.52               | 16079            | 12082           |
 | rle              | l_commitdate-string.csv | 62.96               | 107.13               | 0.59               | 11369            | 10010           |
 | rle              | l_returnflag-string.csv | 11.45               | 17.17                | 0.67               | 9496             | 9333            |
@@ -72,11 +73,11 @@ Other dependencies versions is listed in go.mod
 | rle              | l_discount-int16.csv    | 11.97               | 21.28                | 0.56               | 663              | 746             |
 | rle              | l_orderkey-int32.csv    | 44.73               | 14.04                | 3.19               | 787              | 305             |
 | rle              | l_partkey-int64.csv     | 36.88               | 48.33                | 0.76               | 886              | 919             |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
-|                  |                         |                     |                      |                    |                  |                 |
+| rle              | l_tax-int8.csv          | 11.45               | 20.35                | 0.56               | 647              | 718             |
+| dic              | l_comment-string.csv    | 157.35              | 204.39               | 0.77               | 4268             | 15544           |
+| dic              |                         |                     |                      |                    |                  |                 |
+| dic              |                         |                     |                      |                    |                  |                 |
+| dic              |                         |                     |                      |                    |                  |                 |
 |                  |                         |                     |                      |                    |                  |                 |
 |                  |                         |                     |                      |                    |                  |                 |
 |                  |                         |                     |                      |                    |                  |                 |

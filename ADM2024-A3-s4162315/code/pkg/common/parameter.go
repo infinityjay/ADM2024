@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+const EndOfMap = "END_OF_DICTIONARY"
+
 func ValidateDataType(tech string, dataType string) error {
 	integerTypes := map[string]bool{"int8": true, "int16": true, "int32": true, "int64": true}
 	switch tech {
