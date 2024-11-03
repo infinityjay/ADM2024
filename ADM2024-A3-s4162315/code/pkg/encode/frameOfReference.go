@@ -48,7 +48,6 @@ func FrameOfReference(datatype, filepath string) error {
 				return fmt.Errorf("failed to write to CSV file: %v", err)
 			}
 		} else {
-			frame = value
 			if err := writer.Write([]string{strconv.Itoa(common.Infinity)}); err != nil {
 				return fmt.Errorf("failed to write to CSV file: %v", err)
 			}
