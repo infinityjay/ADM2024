@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestDecode(t *testing.T) {
+func TestBinary(t *testing.T) {
 	byteList := []byte{0b11100011, 0b10000000} // Example bytes: 11100011 10000000
 	var indexes []int
 	for byteIndex, b := range byteList {

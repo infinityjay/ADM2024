@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestEncode(t *testing.T) {
+func TestBinary(t *testing.T) {
 	rows := []string{
 		"1", "1", "1", "2", "2", "2", "1", "1", "1", "2", "2", "2", "3", "3", "3",
 	}
