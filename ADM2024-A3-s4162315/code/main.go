@@ -2,6 +2,9 @@ package main
 
 import (
 	"ADM2024/pkg/common"
+	"ADM2024/pkg/decode"
+	"ADM2024/pkg/encode"
+	"errors"
 	"fmt"
 	"github.com/spf13/pflag"
 	"time"
@@ -31,13 +34,58 @@ func run() error {
 		return err
 	}
 
-	startTime := time.Now().Second()
-	if err := common.Execute(mode, tech, datatype, filepath); err != nil {
+	startTime := time.Now().UnixMilli()
+	if err := execute(mode, tech, datatype, filepath); err != nil {
 		return err
 	}
-	endTime := time.Now().Second()
+	endTime := time.Now().UnixMilli()
 	executionTime := endTime - startTime
-	fmt.Printf("The execution time of %s file with %s technique is: %d s.\n", mode, tech, executionTime)
+	fmt.Printf("The execution time of %s file with %s technique is: %d ms.\n", mode, tech, executionTime)
 
 	return nil
+}
+
+func execute(mode, tech, datatype, filepath string) error {
+	switch mode {
+	case "en":
+		return encodeFunc(tech, datatype, filepath)
+	case "de":
+		return decodeFunc(tech, datatype, filepath)
+	default:
+		return errors.New("invalid mode: must be 'en' for encode or 'de' for decode")
+	}
+}
+
+func encodeFunc(tech, datatype, filepath string) error {
+	switch tech {
+	case "bin":
+		return encode.Binary(datatype, filepath)
+	case "rle":
+		return encode.RunLengthEncoding(datatype, filepath)
+	case "dic":
+		return encode.Dictionary(datatype, filepath)
+	case "for":
+		return encode.FrameOfReference(datatype, filepath)
+	case "dif":
+		return encode.Differential(datatype, filepath)
+	default:
+		return errors.New("unsupported compression tech")
+	}
+}
+
+func decodeFunc(tech, datatype, filepath string) error {
+	switch tech {
+	case "bin":
+		return decode.Binary(datatype, filepath)
+	case "rle":
+		return decode.RunLengthEncoding(datatype, filepath)
+	case "dic":
+		return decode.Dictionary(datatype, filepath)
+	case "for":
+		return decode.FrameOfReference(datatype, filepath)
+	case "dif":
+		return decode.Differential(datatype, filepath)
+	default:
+		return errors.New("unsupported compression tech")
+	}
 }
