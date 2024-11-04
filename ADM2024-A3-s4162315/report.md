@@ -47,11 +47,19 @@ Other dependencies versions is listed in go.mod
 
 ### 2.1 Uncompressed binary format(bin)
 
- 
+2.1.1 implementation
+
+2.1.2 results & analysis
+
+### 2.6 bit packing
+
+write function for each packInt8toInt32 ... and run the unit test.(uint to encode)
+
+list all the function location, and application
 
 
 
-## 3. Results
+## Conclusion
 
 
 
@@ -97,6 +105,26 @@ Other dependencies versions is listed in go.mod
 | for              | l_partkey-int32.csv       | 36.88               | 36.43                | 1.01               | 1080             | 493             |
 | for              | l_quantity-int32.csv      | 16.14               | 12.25                | 1.32               | 1149             | 216             |
 | for              | l_suppkey-int32.csv       | 27.98               | 11.45                | 2.44               | 931              | 311             |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
