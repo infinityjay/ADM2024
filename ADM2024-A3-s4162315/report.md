@@ -45,7 +45,7 @@ Other dependencies versions is listed in go.mod
 
 ## 2. Compression techniques
 
-### 2.1 Uncompressed binary format
+### 2.1 Uncompressed binary format(bin)
 
  
 
@@ -85,17 +85,18 @@ Other dependencies versions is listed in go.mod
 | for              | l_discount-int8.csv       | 11.97               | 3.77                 | 3.18               | 943              | 157             |
 | for              | l_tax-int8.csv            | 11.45               | 3.96                 | 2.89               | 779              | 174             |
 | for              | l_quantity-int8.csv       | 16.14               | 9.33                 | 1.73               | 893              | 257             |
-| for              |                           |                     |                      |                    |                  |                 |
-| for              |                           |                     |                      |                    |                  |                 |
-| for              |                           |                     |                      |                    |                  |                 |
-| for              |                           |                     |                      |                    |                  |                 |
-| for              |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
+| for              | l_discount-int16.csv      | 11.97               | 5.06                 | 2.36               | 947              | 544             |
+| for              | l_linenumber-int16.csv    | 11.45               | 2.86                 | 4.00               | 625              | 142             |
+| for              | l_quantity-int16.csv      | 16.14               | 18.45                | 0.87               | 746              | 247             |
+| for              | l_suppkey-int16.csv       | 27.98               | 22.88                | 1.22               | 1196             | 355             |
+| for              | l_tax-int16.csv           | 11.45               | 5.55                 | 2.06               | 955              | 165             |
+| for              | l_discount-int32.csv      | 11.97               | 15.06                | 0.79               | 623              | 205             |
+| for              | l_extendedprice-int32.csv | 45.05               | 45.58                | 0.99               | 1208             | 517             |
+| for              | l_linenumber-int32.csv    | 11.45               | 11.45                | 1.00               | 583              | 181             |
+| for              | l_orderkey-int32.csv      | 44.73               | 45.60                | 0.98               | 1360             | 531             |
+| for              | l_partkey-int32.csv       | 36.88               | 36.43                | 1.01               | 1080             | 493             |
+| for              | l_quantity-int32.csv      | 16.14               | 12.25                | 1.32               | 1149             | 216             |
+| for              | l_suppkey-int32.csv       | 27.98               | 11.45                | 2.44               | 931              | 311             |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |

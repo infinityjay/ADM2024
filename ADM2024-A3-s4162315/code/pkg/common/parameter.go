@@ -6,8 +6,8 @@ import (
 
 const (
 	EndOfMap             = "END_OF_DICTIONARY"
-	Int8Escape    uint8  = 0xFF
-	Int16Escape   uint16 = 0xFFFF
+	Int8Escape           = 0xFF
+	Bit16Separator int16 = -1
 	Bit4Separator        = 0x0F
 )
 

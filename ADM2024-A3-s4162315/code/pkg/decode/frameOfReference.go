@@ -158,6 +158,46 @@ func forInt16(buff []byte, writer *csv.Writer) error {
 }
 
 func forInt32(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	// Extract the frame from the first byte
+	frame := int32(buff[0])<<24 | int32(buff[1])<<16 | int32(buff[2])<<8 | int32(buff[3])
+	var originalValues []int32
+	originalValues = append(originalValues, frame)
+
+	// Process the buffer
+	for i := 4; i < n; i += 4 {
+		// Check for escape sequence (four consecutive common.Int8Escape bytes)
+		if i+3 < n && buff[i] == common.Int8Escape && buff[i+1] == common.Int8Escape &&
+			buff[i+2] == common.Int8Escape && buff[i+3] == common.Int8Escape {
+			i += 4
+			if i < n {
+				value := int32(buff[i])<<24 | int32(buff[i+1])<<16 | int32(buff[i+2])<<8 | int32(buff[i+3])
+				originalValues = append(originalValues, value)
+			}
+			continue
+		}
+
+		// Extract packed int32
+		packed := int32(buff[i])<<24 | int32(buff[i+1])<<16 | int32(buff[i+2])<<8 | int32(buff[i+3])
+		firstOffset := int16(packed >> 16)
+		secondOffset := int16(packed & 0xFFFF)
+
+		if firstOffset != common.Bit16Separator {
+			originalValues = append(originalValues, frame+int32(firstOffset))
+		}
+
+		if secondOffset != common.Bit16Separator {
+			originalValues = append(originalValues, frame+int32(secondOffset))
+		}
+	}
+
+	// Write the decoded values to the CSV writer
+	for _, value := range originalValues {
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
+
 	return nil
 }
 

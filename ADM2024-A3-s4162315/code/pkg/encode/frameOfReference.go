@@ -44,8 +44,9 @@ func FrameOfReference(datatype, filepath string) error {
 			return fmt.Errorf("failed to write data: %v", err)
 		}
 	case "int32":
-		if err := forInt32(rows, outFile); err != nil {
-			return err
+		buff := forInt32(rows)
+		if err := binary.Write(outFile, binary.LittleEndian, buff); err != nil {
+			return fmt.Errorf("failed to write data: %v", err)
 		}
 	case "int64":
 		if err := forInt64(rows, outFile); err != nil {
@@ -112,6 +113,7 @@ func forInt8(rows [][]string) []byte {
 	return packedData.Bytes()
 }
 
+// use 4 bit offset, thus -1 is deleted, the offset range [-8, -2], [0, 7]
 func forInt16(rows [][]string) []byte {
 	var packedData bytes.Buffer
 	n := len(rows)
@@ -146,7 +148,7 @@ func forInt16(rows [][]string) []byte {
 				}
 				offsetList = []int8{}
 			}
-
+			// two (11111111) to indicate the escape
 			packedData.WriteByte(common.Int8Escape)
 			packedData.WriteByte(common.Int8Escape)
 			valueInt16 := int16(value)
@@ -173,8 +175,67 @@ func forInt16(rows [][]string) []byte {
 	return packedData.Bytes()
 }
 
-func forInt32(rows [][]string, outFile *os.File) error {
-	return nil
+// use 16 bit offset, thus -1 is deleted and use -1 as separator
+func forInt32(rows [][]string) []byte {
+	var packedData bytes.Buffer
+	n := len(rows)
+	frameInt, _ := strconv.Atoi(rows[0][0])
+	frame := int32(frameInt)
+	packedData.Write([]byte{byte(frame >> 24), byte(frame >> 16), byte(frame >> 8), byte(frame)})
+	var offsetList []int16
+	for i := 1; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int32(valueInt)
+		offset := value - frame
+
+		if (-32768 <= offset && offset <= -2) || (0 <= offset && offset <= 32767) {
+			offsetList = append(offsetList, int16(offset))
+		} else {
+			if len(offsetList) != 0 {
+				if len(offsetList)%2 != 0 {
+					offsetList = append(offsetList, common.Bit16Separator)
+				}
+				for i := 0; i < len(offsetList); i += 2 {
+					var packed int32
+					packed |= int32(uint16(offsetList[i])) << 16 // left 16 bits
+					packed |= int32(uint16(offsetList[i+1]))     // right 16 bits
+
+					// Write the packed int32 to buffer, 4 bytes
+					packedData.Write([]byte{
+						byte(packed >> 24), byte(packed >> 16),
+						byte(packed >> 8), byte(packed),
+					})
+				}
+				offsetList = []int16{}
+			}
+			// four (11111111) to indicate the escape
+			packedData.WriteByte(common.Int8Escape)
+			packedData.WriteByte(common.Int8Escape)
+			packedData.WriteByte(common.Int8Escape)
+			packedData.WriteByte(common.Int8Escape)
+			packedData.Write([]byte{
+				byte(value >> 24), byte(value >> 16),
+				byte(value >> 8), byte(value),
+			})
+		}
+	}
+	// Final check if any offsets are left unprocessed
+	if len(offsetList) > 0 {
+		if len(offsetList)%2 != 0 {
+			offsetList = append(offsetList, common.Bit16Separator)
+		}
+		for i := 0; i < len(offsetList); i += 2 {
+			var packed int32
+			packed |= int32(uint16(offsetList[i])) << 16
+			packed |= int32(uint16(offsetList[i+1]))
+
+			packedData.Write([]byte{
+				byte(packed >> 24), byte(packed >> 16),
+				byte(packed >> 8), byte(packed),
+			})
+		}
+	}
+	return packedData.Bytes()
 }
 
 func forInt64(rows [][]string, outFile *os.File) error {
