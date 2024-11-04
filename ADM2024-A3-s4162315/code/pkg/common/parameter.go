@@ -5,9 +5,10 @@ import (
 )
 
 const (
-	EndOfMap            = "END_OF_DICTIONARY"
-	Int8Escape    uint8 = 0xFF
-	Bit4Separator       = 0x0F
+	EndOfMap             = "END_OF_DICTIONARY"
+	Int8Escape    uint8  = 0xFF
+	Int16Escape   uint16 = 0xFFFF
+	Bit4Separator        = 0x0F
 )
 
 func ValidateDataType(tech string, dataType string) error {

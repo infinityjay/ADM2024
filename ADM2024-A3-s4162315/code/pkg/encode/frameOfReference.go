@@ -116,64 +116,59 @@ func forInt16(rows [][]string) []byte {
 	var packedData bytes.Buffer
 	n := len(rows)
 	frame, _ := strconv.Atoi(rows[0][0])
-	// Write the frame as two bytes for int16
+
+	// Write the frame as two bytes for int16 (correct order)
 	packedData.Write([]byte{byte(frame), byte(frame >> 8)})
 	var offsetList []int8
+
 	for i := 1; i < n; i++ {
 		value, _ := strconv.Atoi(rows[i][0])
 		offset := int16(value) - int16(frame)
 
-		// Check if the offset fits within the 4-bit range [-8, -2] or [0, 7]
 		if (-8 <= offset && offset <= -2) || (0 <= offset && offset <= 7) {
 			offsetList = append(offsetList, int8(offset))
 		} else {
-			// Pack existing offsets if we have any
 			if len(offsetList) > 0 {
-				if len(offsetList)%4 != 0 {
-					// If not a multiple of 4, pad with the separator
-					for len(offsetList)%4 != 0 {
-						offsetList = append(offsetList, common.Bit4Separator)
-					}
-				}
 				// Pack the 4-bit offsets into 16-bit values
 				for j := 0; j < len(offsetList); j += 4 {
 					var packed int16
-					packed |= int16(offsetList[j]&0x0F) << 12  // First 4 bits (most significant)
-					packed |= int16(offsetList[j+1]&0x0F) << 8 // Next 4 bits
-					packed |= int16(offsetList[j+2]&0x0F) << 4 // Next 4 bits
-					packed |= int16(offsetList[j+3] & 0x0F)    // Last 4 bits (least significant)
+					// Ensure not to exceed the bounds of offsetList
+					for k := 0; k < 4; k++ {
+						if j+k < len(offsetList) {
+							packed |= int16(offsetList[j+k]&0x0F) << (12 - (k * 4)) // Pack 4 bits
+						} else {
+							packed |= common.Bit4Separator << (12 - (k * 4)) // Fill with separator if not enough offsets
+						}
+					}
 
 					// Write the packed 16-bit value as two bytes
-					packedData.Write([]byte{byte(packed >> 8), byte(packed)})
+					packedData.Write([]byte{byte(packed), byte(packed >> 8)})
 				}
 				offsetList = []int8{}
 			}
 
-			// Write escape sequence and the full 16-bit value as literal
 			packedData.WriteByte(common.Int8Escape)
-			packedData.Write([]byte{byte(value), byte(value >> 8)})
+			valueInt16 := int16(value)
+			packedData.Write([]byte{byte(valueInt16), byte(valueInt16 >> 8)})
 		}
 	}
 
 	// Final packing for any remaining offsets in offsetList
 	if len(offsetList) > 0 {
-		if len(offsetList)%4 != 0 {
-			for len(offsetList)%4 != 0 {
-				offsetList = append(offsetList, common.Bit4Separator)
-			}
-		}
 		for j := 0; j < len(offsetList); j += 4 {
 			var packed int16
-			packed |= int16(offsetList[j]&0x0F) << 12  // First 4 bits (most significant)
-			packed |= int16(offsetList[j+1]&0x0F) << 8 // Next 4 bits
-			packed |= int16(offsetList[j+2]&0x0F) << 4 // Next 4 bits
-			packed |= int16(offsetList[j+3] & 0x0F)    // Last 4 bits (least significant)
+			for k := 0; k < 4; k++ {
+				if j+k < len(offsetList) {
+					packed |= int16(offsetList[j+k]&0x0F) << (12 - (k * 4)) // Pack 4 bits
+				} else {
+					packed |= common.Bit4Separator << (12 - (k * 4)) // Fill with separator if not enough offsets
+				}
+			}
 
 			// Write the packed 16-bit value as two bytes
-			packedData.Write([]byte{byte(packed >> 8), byte(packed)})
+			packedData.Write([]byte{byte(packed), byte(packed >> 8)})
 		}
 	}
-
 	return packedData.Bytes()
 }
 

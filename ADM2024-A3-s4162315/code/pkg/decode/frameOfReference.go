@@ -106,6 +106,56 @@ func forInt8(buff []byte, writer *csv.Writer) error {
 }
 
 func forInt16(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	if n < 2 {
+		return fmt.Errorf("not enough data to decode int16 values")
+	}
+
+	// Read the frame from the first two bytes
+	frame := int16(buff[0]) | int16(buff[1])<<8
+	originalValues := []int16{frame} // Start with the frame value
+
+	// Iterate through the buffer starting from the third byte
+	for i := 2; i < n; {
+		currentByte := buff[i]
+
+		if currentByte == common.Int8Escape { // Handle escape sequences
+			i++
+			if i < n {
+				value := int16(buff[i]) | int16(buff[i+1])<<8
+				originalValues = append(originalValues, value)
+			}
+			i += 2
+			continue
+		}
+
+		// Ensure we have a complete pair of bytes for packing
+		if i+1 < n {
+			packed := int16(buff[i]) | int16(buff[i+1])<<8
+			// Decode the packed offsets
+			for j := 0; j < 4; j++ {
+				offset := int8((packed >> (12 - j*4)) & 0x0F) // Extract the j-th 4-bit offset
+				if offset != common.Bit4Separator {           // Ignore separators
+					// Interpret as signed 4-bit integer
+					if offset >= 0x8 {
+						offset -= 0x10
+					}
+					originalValues = append(originalValues, frame+int16(offset))
+				}
+			}
+			i += 2 // Move to the next pair of bytes
+		} else {
+			break // Avoid reading out of bounds
+		}
+	}
+
+	// Write all original values to the CSV
+	for _, value := range originalValues {
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
+
 	return nil
 }
 
