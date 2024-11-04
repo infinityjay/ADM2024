@@ -117,20 +117,18 @@ func forInt16(buff []byte, writer *csv.Writer) error {
 
 	// Iterate through the buffer starting from the third byte
 	for i := 2; i < n; {
-		currentByte := buff[i]
-
-		if currentByte == common.Int8Escape { // Handle escape sequences
-			i++
-			if i < n {
-				value := int16(buff[i]) | int16(buff[i+1])<<8
-				originalValues = append(originalValues, value)
-			}
-			i += 2
-			continue
-		}
 
 		// Ensure we have a complete pair of bytes for packing
 		if i+1 < n {
+			if buff[i] == common.Int8Escape && buff[i+1] == common.Int8Escape { // Handle escape sequences
+				i += 2
+				if i < n {
+					value := int16(buff[i]) | int16(buff[i+1])<<8
+					originalValues = append(originalValues, value)
+				}
+				i += 2
+				continue
+			}
 			packed := int16(buff[i]) | int16(buff[i+1])<<8
 			// Decode the packed offsets
 			for j := 0; j < 4; j++ {

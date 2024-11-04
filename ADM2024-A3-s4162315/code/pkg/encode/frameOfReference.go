@@ -148,6 +148,7 @@ func forInt16(rows [][]string) []byte {
 			}
 
 			packedData.WriteByte(common.Int8Escape)
+			packedData.WriteByte(common.Int8Escape)
 			valueInt16 := int16(value)
 			packedData.Write([]byte{byte(valueInt16), byte(valueInt16 >> 8)})
 		}
