@@ -81,15 +81,15 @@ Other dependencies versions is listed in go.mod
 | dic              | l_shipmode-string.csv     | 30.25               | 11.45                | 2.64               | 1349             | 9773            |
 | dic              | l_discount-int8.csv       | 11.97               | 12.49                | 0.96               | 1073             | 10095           |
 | dic              | l_extendedprice-int32.csv | 45.05               | 52.34                | 0.86               | 3576             | 15216           |
-| for              | l_discount-int8.csv       | 11.97               | 13.53                | 0.88               | 678              | 759             |
-| for              | l_extendedprice-int32.csv | 45.05               | 159.51               | 0.28               | 1498             | 1949            |
-| for              | l_orderkey-int32.csv      | 44.73               | 159.19               | 0.28               | 1400             | 1748            |
-| for              | l_linenumber-int8.csv     | 11.45               | 11.45                | 1.00               | 665              | 607             |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
+| for              | l_linenumber-int8.csv     | 11.45               | 5.72                 | 2.00               | 654              | 164             |
+| for              | l_discount-int8.csv       | 11.97               | 6.24                 | 1.92               | 741              |                 |
+| for              |                           |                     |                      |                    |                  |                 |
+| for              |                           |                     |                      |                    |                  |                 |
+| for              |                           |                     |                      |                    |                  |                 |
+| for              |                           |                     |                      |                    |                  |                 |
+| for              |                           |                     |                      |                    |                  |                 |
+| for              |                           |                     |                      |                    |                  |                 |
+| for              |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |

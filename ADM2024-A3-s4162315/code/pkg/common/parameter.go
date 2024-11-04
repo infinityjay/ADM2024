@@ -5,8 +5,9 @@ import (
 )
 
 const (
-	EndOfMap = "END_OF_DICTIONARY"
-	Infinity = int(^uint(0) >> 1)
+	EndOfMap            = "END_OF_DICTIONARY"
+	Int8Escape    uint8 = 0xFF
+	Bit4Separator       = 0x0F
 )
 
 func ValidateDataType(tech string, dataType string) error {
