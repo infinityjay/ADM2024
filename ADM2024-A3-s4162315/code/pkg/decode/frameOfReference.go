@@ -81,15 +81,19 @@ func forInt8(buff []byte, writer *csv.Writer) error {
 		firstOffset := int8((currentByte >> 4) & 0x0F) // Get the first 4 bits
 		secondOffset := int8(currentByte & 0x0F)       // Get the second 4 bits
 
-		// Interpret firstOffset as signed 4-bit integer
-		if firstOffset >= 0x8 {
-			firstOffset -= 0x10
-		}
 		if firstOffset != common.Bit4Separator { // Check for separator
+			// Interpret firstOffset as signed 4-bit integer
+			if firstOffset >= 0x8 {
+				firstOffset -= 0x10
+			}
 			originalValues = append(originalValues, int(frame+firstOffset))
 		}
 
 		if secondOffset != common.Bit4Separator { // Check for separator
+			// Interpret secondOffset as signed 4-bit integer
+			if secondOffset >= 0x8 {
+				secondOffset -= 0x10
+			}
 			originalValues = append(originalValues, int(frame+secondOffset))
 		}
 	}

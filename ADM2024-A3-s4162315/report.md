@@ -81,10 +81,10 @@ Other dependencies versions is listed in go.mod
 | dic              | l_shipmode-string.csv     | 30.25               | 11.45                | 2.64               | 1349             | 9773            |
 | dic              | l_discount-int8.csv       | 11.97               | 12.49                | 0.96               | 1073             | 10095           |
 | dic              | l_extendedprice-int32.csv | 45.05               | 52.34                | 0.86               | 3576             | 15216           |
-| for              | l_linenumber-int8.csv     | 11.45               | 5.72                 | 2.00               | 654              | 164             |
-| for              | l_discount-int8.csv       | 11.97               | 6.24                 | 1.92               | 741              |                 |
-| for              |                           |                     |                      |                    |                  |                 |
-| for              |                           |                     |                      |                    |                  |                 |
+| for              | l_linenumber-int8.csv     | 11.45               | 2.86                 | 4.00               | 740              | 161             |
+| for              | l_discount-int8.csv       | 11.97               | 3.77                 | 3.18               | 943              | 157             |
+| for              | l_tax-int8.csv            | 11.45               | 3.96                 | 2.89               | 779              | 174             |
+| for              | l_quantity-int8.csv       | 16.14               | 9.33                 | 1.73               | 893              | 257             |
 | for              |                           |                     |                      |                    |                  |                 |
 | for              |                           |                     |                      |                    |                  |                 |
 | for              |                           |                     |                      |                    |                  |                 |
