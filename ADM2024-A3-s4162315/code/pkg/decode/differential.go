@@ -204,5 +204,79 @@ func difInt32(buff []byte, writer *csv.Writer) error {
 }
 
 func difInt64(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	// Extract the frame from the first byte
+	previous := int64(buff[0])<<56 | int64(buff[1])<<48 | int64(buff[2])<<40 | int64(buff[3])<<32 |
+		int64(buff[4])<<24 | int64(buff[5])<<16 | int64(buff[6])<<8 | int64(buff[7])
+	var originalValues []int64
+	originalValues = append(originalValues, previous)
+
+	// Process the buffer
+	for i := 8; i < n; i += 8 {
+		// Check for escape sequence (four consecutive common.Int8Escape bytes)
+		if i+7 < n && buff[i] == common.Int8Escape && buff[i+1] == common.Int8Escape &&
+			buff[i+2] == common.Int8Escape && buff[i+3] == common.Int8Escape &&
+			buff[i+4] == common.Int8Escape && buff[i+5] == common.Int8Escape &&
+			buff[i+6] == common.Int8Escape && buff[i+7] == common.Int8Escape {
+			i += 8
+			if i < n {
+				value := int64(buff[i])<<56 | int64(buff[i+1])<<48 | int64(buff[i+2])<<40 | int64(buff[i+3])<<32 |
+					int64(buff[i+4])<<24 | int64(buff[i+5])<<16 | int64(buff[i+6])<<8 | int64(buff[i+7])
+				originalValues = append(originalValues, value)
+				previous = value
+			}
+			continue
+		}
+
+		firstOffset := buff[i]
+		secondOffset := buff[i+1]
+		thirdOffset := buff[i+2]
+		forthOffset := buff[i+3]
+		fifthOffset := buff[i+4]
+		sixthOffset := buff[i+5]
+		sevenOffset := buff[i+6]
+		eightOffset := buff[i+7]
+
+		if firstOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(firstOffset)))
+			previous = previous + int64(int8(firstOffset))
+		}
+		if secondOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(secondOffset)))
+			previous = previous + int64(int8(secondOffset))
+		}
+		if thirdOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(thirdOffset)))
+			previous = previous + int64(int8(thirdOffset))
+		}
+		if forthOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(forthOffset)))
+			previous = previous + int64(int8(forthOffset))
+		}
+		if fifthOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(fifthOffset)))
+			previous = previous + int64(int8(fifthOffset))
+		}
+		if sixthOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(sixthOffset)))
+			previous = previous + int64(int8(sixthOffset))
+		}
+		if sevenOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(sevenOffset)))
+			previous = previous + int64(int8(sevenOffset))
+		}
+		if eightOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int64(int8(eightOffset)))
+			previous = previous + int64(int8(eightOffset))
+		}
+	}
+
+	// Write the decoded values to the CSV writer
+	for _, value := range originalValues {
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
+
 	return nil
 }

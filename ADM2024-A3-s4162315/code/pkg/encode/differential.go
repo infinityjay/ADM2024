@@ -234,5 +234,63 @@ func difInt32(rows [][]string) []byte {
 }
 
 func difInt64(rows [][]string) []byte {
-	return nil
+	var packedData bytes.Buffer
+	n := len(rows)
+	previous, _ := strconv.ParseInt(rows[0][0], 10, 64)
+	packedData.Write([]byte{
+		byte(previous >> 56), byte(previous >> 48),
+		byte(previous >> 40), byte(previous >> 32),
+		byte(previous >> 24), byte(previous >> 16),
+		byte(previous >> 8), byte(previous)})
+
+	var offsetList []int8
+	for i := 1; i < n; i++ {
+		value, _ := strconv.ParseInt(rows[i][0], 10, 64)
+		offset := value - previous
+		previous = value
+
+		if (-128 <= offset && offset <= -2) || (0 <= offset && offset <= 127) {
+			offsetList = append(offsetList, int8(offset))
+		} else {
+			if len(offsetList) != 0 {
+				for len(offsetList)%8 != 0 {
+					offsetList = append(offsetList, common.Bit8Separator)
+				}
+				for i := 0; i < len(offsetList); i += 8 {
+					packedData.Write([]byte{
+						uint8(offsetList[i]), uint8(offsetList[i+1]),
+						uint8(offsetList[i+2]), uint8(offsetList[i+3]),
+						uint8(offsetList[i+4]), uint8(offsetList[i+5]),
+						uint8(offsetList[i+6]), uint8(offsetList[i+7]),
+					})
+				}
+				offsetList = []int8{}
+			}
+			// eight (11111111) to indicate the escape
+			for i := 0; i < 8; i++ {
+				packedData.WriteByte(common.Int8Escape)
+			}
+			packedData.Write([]byte{
+				byte(value >> 56), byte(value >> 48),
+				byte(value >> 40), byte(value >> 32),
+				byte(value >> 24), byte(value >> 16),
+				byte(value >> 8), byte(value),
+			})
+		}
+	}
+	// Final check if any offsets are left unprocessed
+	if len(offsetList) != 0 {
+		for len(offsetList)%8 != 0 {
+			offsetList = append(offsetList, common.Bit8Separator)
+		}
+		for i := 0; i < len(offsetList); i += 8 {
+			packedData.Write([]byte{
+				uint8(offsetList[i]), uint8(offsetList[i+1]),
+				uint8(offsetList[i+2]), uint8(offsetList[i+3]),
+				uint8(offsetList[i+4]), uint8(offsetList[i+5]),
+				uint8(offsetList[i+6]), uint8(offsetList[i+7]),
+			})
+		}
+	}
+	return packedData.Bytes()
 }

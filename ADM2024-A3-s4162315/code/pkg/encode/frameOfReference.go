@@ -231,6 +231,7 @@ func forInt32(rows [][]string) []byte {
 	return packedData.Bytes()
 }
 
+// use 8 bit offset
 func forInt64(rows [][]string) []byte {
 	var packedData bytes.Buffer
 	n := len(rows)
@@ -241,32 +242,27 @@ func forInt64(rows [][]string) []byte {
 		byte(frame >> 24), byte(frame >> 16),
 		byte(frame >> 8), byte(frame)})
 
-	var offsetList []int16
+	var offsetList []int8
 	for i := 1; i < n; i++ {
 		value, _ := strconv.ParseInt(rows[i][0], 10, 64)
 		offset := value - frame
 
-		if (-32768 <= offset && offset <= -2) || (0 <= offset && offset <= 32767) {
-			offsetList = append(offsetList, int16(offset))
+		if (-128 <= offset && offset <= -2) || (0 <= offset && offset <= 127) {
+			offsetList = append(offsetList, int8(offset))
 		} else {
 			if len(offsetList) != 0 {
-				for len(offsetList)%4 != 0 {
-					offsetList = append(offsetList, common.Bit16Separator)
+				for len(offsetList)%8 != 0 {
+					offsetList = append(offsetList, common.Bit8Separator)
 				}
-				for i := 0; i < len(offsetList); i += 4 {
-					var packed int64
-					packed |= int64(uint16(offsetList[i])) << 48
-					packed |= int64(uint16(offsetList[i+1])) << 32
-					packed |= int64(uint16(offsetList[i+2])) << 16
-					packed |= int64(uint16(offsetList[i+3]))
-
+				for i := 0; i < len(offsetList); i += 8 {
 					packedData.Write([]byte{
-						byte(packed >> 56), byte(packed >> 48),
-						byte(packed >> 40), byte(packed >> 32),
-						byte(packed >> 24), byte(packed >> 16),
-						byte(packed >> 8), byte(packed)})
+						uint8(offsetList[i]), uint8(offsetList[i+1]),
+						uint8(offsetList[i+2]), uint8(offsetList[i+3]),
+						uint8(offsetList[i+4]), uint8(offsetList[i+5]),
+						uint8(offsetList[i+6]), uint8(offsetList[i+7]),
+					})
 				}
-				offsetList = []int16{}
+				offsetList = []int8{}
 			}
 			// eight (11111111) to indicate the escape
 			for i := 0; i < 8; i++ {
@@ -281,22 +277,17 @@ func forInt64(rows [][]string) []byte {
 		}
 	}
 	// Final check if any offsets are left unprocessed
-	if len(offsetList) > 0 {
-		for len(offsetList)%4 != 0 {
-			offsetList = append(offsetList, common.Bit16Separator)
+	if len(offsetList) != 0 {
+		for len(offsetList)%8 != 0 {
+			offsetList = append(offsetList, common.Bit8Separator)
 		}
-		for i := 0; i < len(offsetList); i += 4 {
-			var packed int64
-			packed |= int64(uint16(offsetList[i])) << 48
-			packed |= int64(uint16(offsetList[i+1])) << 32
-			packed |= int64(uint16(offsetList[i+2])) << 16
-			packed |= int64(uint16(offsetList[i+3]))
-
+		for i := 0; i < len(offsetList); i += 8 {
 			packedData.Write([]byte{
-				byte(packed >> 56), byte(packed >> 48),
-				byte(packed >> 40), byte(packed >> 32),
-				byte(packed >> 24), byte(packed >> 16),
-				byte(packed >> 8), byte(packed)})
+				uint8(offsetList[i]), uint8(offsetList[i+1]),
+				uint8(offsetList[i+2]), uint8(offsetList[i+3]),
+				uint8(offsetList[i+4]), uint8(offsetList[i+5]),
+				uint8(offsetList[i+6]), uint8(offsetList[i+7]),
+			})
 		}
 	}
 	return packedData.Bytes()

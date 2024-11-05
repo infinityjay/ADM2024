@@ -227,25 +227,38 @@ func forInt64(buff []byte, writer *csv.Writer) error {
 			continue
 		}
 
-		// Extract packed int64
-		packed := int64(buff[i])<<56 | int64(buff[i+1])<<48 | int64(buff[i+2])<<40 | int64(buff[i+3])<<32 |
-			int64(buff[i+4])<<24 | int64(buff[i+5])<<16 | int64(buff[i+6])<<8 | int64(buff[i+7])
-		firstOffset := int16(packed >> 48)
-		secondOffset := int16(packed >> 32)
-		thirdOffset := int16(packed >> 16)
-		forthOffset := int16(packed & 0xFFFF)
+		firstOffset := buff[i]
+		secondOffset := buff[i+1]
+		thirdOffset := buff[i+2]
+		forthOffset := buff[i+3]
+		fifthOffset := buff[i+4]
+		sixthOffset := buff[i+5]
+		sevenOffset := buff[i+6]
+		eightOffset := buff[i+7]
 
-		if firstOffset != common.Bit16Separator {
-			originalValues = append(originalValues, frame+int64(firstOffset))
+		if firstOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(firstOffset)))
 		}
-		if secondOffset != common.Bit16Separator {
-			originalValues = append(originalValues, frame+int64(secondOffset))
+		if secondOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(secondOffset)))
 		}
-		if thirdOffset != common.Bit16Separator {
-			originalValues = append(originalValues, frame+int64(thirdOffset))
+		if thirdOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(thirdOffset)))
 		}
-		if forthOffset != common.Bit16Separator {
-			originalValues = append(originalValues, frame+int64(forthOffset))
+		if forthOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(forthOffset)))
+		}
+		if fifthOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(fifthOffset)))
+		}
+		if sixthOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(sixthOffset)))
+		}
+		if sevenOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(sevenOffset)))
+		}
+		if eightOffset != common.Int8Escape {
+			originalValues = append(originalValues, frame+int64(int8(eightOffset)))
 		}
 	}
 
