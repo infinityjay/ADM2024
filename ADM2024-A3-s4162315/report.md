@@ -112,17 +112,17 @@ list all the function location, and application
 | for              | l_partkey-int64.csv       | 36.88               | 71.75                | 0.51               | 1111             | 715             |
 | for              | l_quantity-int64.csv      | 16.14               | 13.40                | 1.20               | 724              | 233             |
 | for              | l_suppkey-int64.csv       | 27.98               | 11.46                | 2.44               | 1241             | 319             |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
+| dif              | l_discount-int8.csv       | 11.97               | 4.41                 | 2.71               | 637              | 145             |
+| dif              | l_linenumber-int8.csv     | 11.45               | 3.23                 | 3.55               | 708              | 127             |
+| dif              | l_quantity-int8.csv       | 16.14               | 9.53                 | 1.69               | 730              | 198             |
+| dif              | l_tax-int8.csv            | 11.45               | 3.96                 | 2.89               | 586              | 143             |
+| dif              | l_discount-int16.csv      | 11.97               | 6.63                 | 1.80               | 641              | 176             |
+| dif              | l_linenumber-int16.csv    | 11.45               | 3.75                 | 3.05               | 648              | 148             |
+| dif              | l_quantity-int16.csv      | 16.14               | 18.87                | 0.86               | 820              | 258             |
+| dif              | l_suppkey-int16.csv       | 27.98               | 22.88                | 1.22               | 881              | 375             |
+| dif              | l_tax-int16.csv           | 11.45               | 5.55                 | 2.06               | 619              | 161             |
+| dif              |                           |                     |                      |                    |                  |                 |
+| dif              |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
