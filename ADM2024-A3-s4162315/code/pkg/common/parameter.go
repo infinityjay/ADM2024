@@ -8,6 +8,7 @@ const (
 	EndOfMap             = "END_OF_DICTIONARY"
 	Int8Escape           = 0xFF
 	Bit16Separator int16 = -1
+	Bit8Separator  int8  = -1
 	Bit4Separator        = 0x0F
 )
 

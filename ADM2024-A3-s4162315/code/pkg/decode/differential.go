@@ -153,6 +153,53 @@ func difInt16(buff []byte, writer *csv.Writer) error {
 }
 
 func difInt32(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	previous := int32(buff[0])<<24 | int32(buff[1])<<16 | int32(buff[2])<<8 | int32(buff[3])
+	var originalValues []int32
+	originalValues = append(originalValues, previous)
+
+	for i := 4; i < n; i += 4 {
+		if i+3 < n && buff[i] == common.Int8Escape && buff[i+1] == common.Int8Escape &&
+			buff[i+2] == common.Int8Escape && buff[i+3] == common.Int8Escape {
+			i += 4
+			if i < n {
+				value := int32(buff[i])<<24 | int32(buff[i+1])<<16 | int32(buff[i+2])<<8 | int32(buff[i+3])
+				originalValues = append(originalValues, value)
+				previous = value
+			}
+			continue
+		}
+		// Extract packed int32
+		firstOffset := buff[i]
+		secondOffset := buff[i+1]
+		thirdOffset := buff[i+2]
+		forthOffset := buff[i+3]
+
+		if firstOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int32(int8(firstOffset)))
+			previous = previous + int32(int8(firstOffset))
+		}
+		if secondOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int32(int8(secondOffset)))
+			previous = previous + int32(int8(secondOffset))
+		}
+		if thirdOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int32(int8(thirdOffset)))
+			previous = previous + int32(int8(thirdOffset))
+		}
+		if forthOffset != common.Int8Escape {
+			originalValues = append(originalValues, previous+int32(int8(forthOffset)))
+			previous = previous + int32(int8(forthOffset))
+		}
+	}
+
+	// Write the decoded values to the CSV writer
+	for _, value := range originalValues {
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
+
 	return nil
 }
 
