@@ -202,5 +202,57 @@ func forInt32(buff []byte, writer *csv.Writer) error {
 }
 
 func forInt64(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	// Extract the frame from the first byte
+	frame := int64(buff[0])<<56 | int64(buff[1])<<48 | int64(buff[2])<<40 | int64(buff[3])<<32 |
+		int64(buff[4])<<24 | int64(buff[5])<<16 | int64(buff[6])<<8 | int64(buff[7])
+	var originalValues []int64
+	originalValues = append(originalValues, frame)
+
+	// Process the buffer
+	for i := 8; i < n; i += 8 {
+		// Check for escape sequence (four consecutive common.Int8Escape bytes)
+		if i+7 < n && buff[i] == common.Int8Escape && buff[i+1] == common.Int8Escape &&
+			buff[i+2] == common.Int8Escape && buff[i+3] == common.Int8Escape &&
+			buff[i+4] == common.Int8Escape && buff[i+5] == common.Int8Escape &&
+			buff[i+6] == common.Int8Escape && buff[i+7] == common.Int8Escape {
+			i += 8
+			if i < n {
+				value := int64(buff[i])<<56 | int64(buff[i+1])<<48 | int64(buff[i+2])<<40 | int64(buff[i+3])<<32 |
+					int64(buff[i+4])<<24 | int64(buff[i+5])<<16 | int64(buff[i+6])<<8 | int64(buff[i+7])
+				originalValues = append(originalValues, value)
+			}
+			continue
+		}
+
+		// Extract packed int64
+		packed := int64(buff[i])<<56 | int64(buff[i+1])<<48 | int64(buff[i+2])<<40 | int64(buff[i+3])<<32 |
+			int64(buff[i+4])<<24 | int64(buff[i+5])<<16 | int64(buff[i+6])<<8 | int64(buff[i+7])
+		firstOffset := int16(packed >> 48)
+		secondOffset := int16(packed >> 32)
+		thirdOffset := int16(packed >> 16)
+		forthOffset := int16(packed & 0xFFFF)
+
+		if firstOffset != common.Bit16Separator {
+			originalValues = append(originalValues, frame+int64(firstOffset))
+		}
+		if secondOffset != common.Bit16Separator {
+			originalValues = append(originalValues, frame+int64(secondOffset))
+		}
+		if thirdOffset != common.Bit16Separator {
+			originalValues = append(originalValues, frame+int64(thirdOffset))
+		}
+		if forthOffset != common.Bit16Separator {
+			originalValues = append(originalValues, frame+int64(forthOffset))
+		}
+	}
+
+	// Write the decoded values to the CSV writer
+	for _, value := range originalValues {
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
+
 	return nil
 }

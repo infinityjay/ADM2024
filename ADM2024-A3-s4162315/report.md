@@ -105,13 +105,13 @@ list all the function location, and application
 | for              | l_partkey-int32.csv       | 36.88               | 36.43                | 1.01               | 1080             | 493             |
 | for              | l_quantity-int32.csv      | 16.14               | 12.25                | 1.32               | 1149             | 216             |
 | for              | l_suppkey-int32.csv       | 27.98               | 11.45                | 2.44               | 931              | 311             |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
+| for              | l_discount-int64.csv      | 11.97               | 20.26                | 0.59               | 670              | 244             |
+| for              | l_extendedprice-int64.csv | 45.05               | 91.15                | 0.49               | 964              | 814             |
+| for              | l_linenumber-int64.csv    | 11.45               | 11.45                | 1.00               | 619              | 184             |
+| for              | l_orderkey-int64.csv      | 44.73               | 91.13                | 0.49               | 1403             | 802             |
+| for              | l_partkey-int64.csv       | 36.88               | 71.75                | 0.51               | 1111             | 715             |
+| for              | l_quantity-int64.csv      | 16.14               | 13.40                | 1.20               | 724              | 233             |
+| for              | l_suppkey-int64.csv       | 27.98               | 11.46                | 2.44               | 1241             | 319             |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
