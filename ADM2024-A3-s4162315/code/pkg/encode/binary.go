@@ -2,8 +2,10 @@ package encode
 
 import (
 	"ADM2024/pkg/common"
+	"bytes"
 	"encoding/binary"
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -20,7 +22,6 @@ Value 3 bit vector: 00000000 00001110
 */
 func Binary(datatype, filepath string) error {
 	outputFilePath := filepath + ".bin"
-	// read the csv file
 	file, err := os.Open(filepath)
 	if err != nil {
 		return fmt.Errorf("fail to open CSV file: %v", err)
@@ -32,48 +33,37 @@ func Binary(datatype, filepath string) error {
 	if err != nil {
 		return fmt.Errorf("fail to read CSV file: %v", err)
 	}
-	// generate the bit vector list
-	rowLength := len(rows)
-	bitVectorList := make([][]byte, 0)
-	maxValue := -1
-	for i, row := range rows {
-		value, _ := strconv.Atoi(row[0])
-		// expand the size of bitVectorList while loop the rows
-		if value > maxValue {
-			if value > maxValue {
-				maxValue = value
-				for len(bitVectorList) <= maxValue {
-					bitVectorList = append(bitVectorList, make([]byte, (rowLength+7)/8))
-				}
-			}
-		}
-		bitVectorList[value][i/8] |= 1 << (8*(i/8+1) - i - 1)
-	}
-	// write the .bin file
+
 	outFile, err := os.Create(outputFilePath)
 	if err != nil {
-		return fmt.Errorf("fail to create binary file: %v", err)
+		return fmt.Errorf("failed to create file: %v", err)
 	}
 	defer outFile.Close()
 
-	// write the bit packing with encoding/binary
-	if err := binary.Write(outFile, binary.LittleEndian, int32(rowLength)); err != nil {
-		return fmt.Errorf("failed to write number of csv rows: %v", err)
-	}
-
-	numVectors := int32(len(bitVectorList))
-	if err := binary.Write(outFile, binary.LittleEndian, numVectors); err != nil {
-		return fmt.Errorf("failed to write number of bit vectors: %v", err)
-	}
-
-	for _, bitVector := range bitVectorList {
-		vectorSize := int32(len(bitVector))
-		if err := binary.Write(outFile, binary.LittleEndian, vectorSize); err != nil {
-			return fmt.Errorf("failed to write size of bit vector: %v", err)
+	switch datatype {
+	case "int8":
+		buff := binInt8(rows)
+		if err := binary.Write(outFile, binary.LittleEndian, buff); err != nil {
+			return fmt.Errorf("failed to write data: %v", err)
 		}
-		if err := binary.Write(outFile, binary.LittleEndian, bitVector); err != nil {
-			return fmt.Errorf("failed to write bit vector data: %v", err)
+
+	case "int16":
+		buff := binInt16(rows)
+		if err := binary.Write(outFile, binary.LittleEndian, buff); err != nil {
+			return fmt.Errorf("failed to write data: %v", err)
 		}
+	case "int32":
+		buff := binInt32(rows)
+		if err := binary.Write(outFile, binary.LittleEndian, buff); err != nil {
+			return fmt.Errorf("failed to write data: %v", err)
+		}
+	case "int64":
+		buff := binInt64(rows)
+		if err := binary.Write(outFile, binary.LittleEndian, buff); err != nil {
+			return fmt.Errorf("failed to write data: %v", err)
+		}
+	default:
+		return errors.New("invalid dataType")
 	}
 
 	// get the compression ratio
@@ -84,4 +74,115 @@ func Binary(datatype, filepath string) error {
 	ratioStr := fmt.Sprintf("%.2f", ratio)
 	fmt.Printf("The compression ratio is: %s\n", ratioStr)
 	return nil
+}
+
+func binInt8(rows [][]string) []byte {
+	var packedData bytes.Buffer
+	n := len(rows)
+	valueMap := make(map[int8][]byte)
+	for i := 0; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int8(valueInt)
+		if _, ok := valueMap[value]; ok {
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		} else {
+			valueMap[value] = make([]byte, (n+7)/8)
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		}
+	}
+	// write the length
+	lenInt32 := int32(n)
+	packedData.Write([]byte{byte(lenInt32 >> 24), byte(lenInt32 >> 16), byte(lenInt32 >> 8), byte(lenInt32)})
+	for key, value := range valueMap {
+		packedData.WriteByte(byte(key))
+		for _, b := range value {
+			packedData.WriteByte(b)
+		}
+	}
+
+	return packedData.Bytes()
+}
+
+func binInt16(rows [][]string) []byte {
+	var packedData bytes.Buffer
+	n := len(rows)
+	valueMap := make(map[int16][]byte)
+	for i := 0; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int16(valueInt)
+		if _, ok := valueMap[value]; ok {
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		} else {
+			valueMap[value] = make([]byte, (n+7)/8)
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		}
+	}
+	// write the length
+	lenInt32 := int32(n)
+	packedData.Write([]byte{byte(lenInt32 >> 24), byte(lenInt32 >> 16), byte(lenInt32 >> 8), byte(lenInt32)})
+	for key, value := range valueMap {
+		packedData.Write([]byte{byte(key), byte(key >> 8)})
+		for _, b := range value {
+			packedData.WriteByte(b)
+		}
+	}
+
+	return packedData.Bytes()
+}
+
+func binInt32(rows [][]string) []byte {
+	var packedData bytes.Buffer
+	n := len(rows)
+	valueMap := make(map[int32][]byte)
+	for i := 0; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int32(valueInt)
+		if _, ok := valueMap[value]; ok {
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		} else {
+			valueMap[value] = make([]byte, (n+7)/8)
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		}
+	}
+	// write the length
+	lenInt32 := int32(n)
+	packedData.Write([]byte{byte(lenInt32 >> 24), byte(lenInt32 >> 16), byte(lenInt32 >> 8), byte(lenInt32)})
+	for key, value := range valueMap {
+		packedData.Write([]byte{byte(key >> 24), byte(key >> 16), byte(key >> 8), byte(key)})
+		for _, b := range value {
+			packedData.WriteByte(b)
+		}
+	}
+
+	return packedData.Bytes()
+}
+
+func binInt64(rows [][]string) []byte {
+	var packedData bytes.Buffer
+	n := len(rows)
+	valueMap := make(map[int64][]byte)
+	for i := 0; i < n; i++ {
+		value, _ := strconv.ParseInt(rows[i][0], 10, 64)
+		if _, ok := valueMap[value]; ok {
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		} else {
+			valueMap[value] = make([]byte, (n+7)/8)
+			valueMap[value][i/8] |= 1 << (7 - i%8)
+		}
+	}
+	// write the length
+	lenInt32 := int32(n)
+	packedData.Write([]byte{byte(lenInt32 >> 24), byte(lenInt32 >> 16), byte(lenInt32 >> 8), byte(lenInt32)})
+	for key, value := range valueMap {
+		packedData.Write([]byte{
+			byte(key >> 56), byte(key >> 48),
+			byte(key >> 40), byte(key >> 32),
+			byte(key >> 24), byte(key >> 16),
+			byte(key >> 8), byte(key)})
+		for _, b := range value {
+			packedData.WriteByte(b)
+		}
+	}
+
+	return packedData.Bytes()
 }
