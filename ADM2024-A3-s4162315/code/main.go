@@ -28,7 +28,7 @@ func run() error {
 	pflag.StringVar(&mode, "mode", "en", "'en' or 'de' to specify whether your program should encode the given data or decode data that your program has encoded")
 	pflag.StringVar(&tech, "tech", "bin", "The compression technique to be used: bin, rle, dic, for, or dif")
 	pflag.StringVar(&datatype, "datatype", "int8", "The data type of the input data: int8, int16, int32, int64, or string")
-	pflag.StringVar(&filepath, "filepath", "./", "The name (or entire path) of the file to be en- or de-coded")
+	pflag.StringVar(&filepath, "filepath", "", "The name (or entire path) of the file to be en- or de-coded")
 	pflag.Parse()
 
 	if err := common.ValidateDataType(tech, datatype); err != nil {
@@ -73,6 +73,8 @@ func encodeFunc(tech, datatype, filepath string) error {
 	switch tech {
 	case "bin":
 		return encode.Binary(datatype, filepath)
+	case "bve":
+		return encode.BitVectorEncoding(datatype, filepath)
 	case "rle":
 		return encode.RunLengthEncoding(datatype, filepath)
 	case "dic":
@@ -90,6 +92,8 @@ func decodeFunc(tech, datatype, filepath string) error {
 	switch tech {
 	case "bin":
 		return decode.Binary(datatype, filepath)
+	case "bve":
+		return decode.BitVectorEncoding(datatype, filepath)
 	case "rle":
 		return decode.RunLengthEncoding(datatype, filepath)
 	case "dic":
