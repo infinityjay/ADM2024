@@ -119,25 +119,37 @@ list all the function location, and application
 |                  |                           |                     |                      |                    |                  |                 |
 | dic              | l_comment-string.csv      | 157.35              | 211.08               | 0.75               | 23826            | 15814           |
 | dic              | l_commitdate-string.csv   | 62.96               | 26.05                | 2.42               | 11245            | 10027           |
-|                  | l_linestatus-string.csv   | 11.45               | 11.45                | 1.00               | 10347            | 9395            |
-|                  | l_receiptdate-string.csv  | 62.96               | 26.07                | 2.41               | 11796            | 9840            |
+| dic              | l_linestatus-string.csv   | 11.45               | 11.45                | 1.00               | 10347            | 9395            |
+| dic              | l_receiptdate-string.csv  | 62.96               | 26.07                | 2.41               | 11796            | 9840            |
 | dic              | l_returnflag-string.csv   | 11.45               | 11.45                | 1.00               | 10783            | 9377            |
-|                  | l_shipdate-string.csv     | 62.96               | 26.07                | 2.41               | 11326            | 10834           |
+| dic              | l_shipdate-string.csv     | 62.96               | 26.07                | 2.41               | 11326            | 10834           |
 | dic              | l_shipinstruct-string.csv | 74.39               | 11.45                | 6.50               | 10584            | 9932            |
 | dic              | l_shipmode-string.csv     | 30.25               | 11.45                | 2.64               | 11404            | 9457            |
-|                  | l_discount-int8.csv       | 11.97               | 5.72                 | 2.09               | 698              | 262             |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-|                  |                           |                     |                      |                    |                  |                 |
-| dic              | l_discount-int8.csv       | 11.97               | 12.49                | 0.96               | 1073             | 10095           |
-| dic              | l_extendedprice-int32.csv | 45.05               | 52.34                | 0.86               | 3576             | 15216           |
+| dic              | l_discount-int8.csv       | 11.97               | 5.72                 | 2.09               | 698              | 262             |
+| dic              | l_linenumber-int8.csv     | 11.45               | 5.72                 | 2.00               | 759              | 206             |
+| dic              | l_quantity-int8.csv       | 16.14               | 5.72                 | 2.82               | 887              | 285             |
+| dic              | l_tax-int8.csv            | 11.45               | 5.72                 | 2.00               | 713              | 250             |
+| dic              | l_discount-int16.csv      | 11.97               | 11.45                | 1.05               | 757              | 298             |
+| dic              | l_linenumber-int16.csv    | 11.45               | 11.45                | 1.00               | 701              | 244             |
+| dic              | l_quantity-int16.csv      | 16.14               | 11.45                | 1.41               | 884              | 319             |
+| dic              | l_suppkey-int16.csv       | 27.98               | 11.48                | 2.44               | 878              | 424             |
+| dic              | l_tax-int16.csv           | 11.45               | 11.45                | 1.00               | 749              | 291             |
+| dic              | l_discount-int32.csv      | 11.97               | 22.89                | 0.52               | 787              | 356             |
+| dic              | l_extendedprice-int32.csv | 45.05               | 30.02                | 1.50               | 1872             | 1158            |
+| dic              | l_linenumber-int32.csv    | 11.45               | 22.89                | 0.50               | 688              | 266             |
+| dic              | l_orderkey-int32.csv      | 44.73               | 34.34                | 1.30               | 1194             | 859             |
+| dic              | l_partkey-int32.csv       | 36.88               | 24.42                | 1.51               | 1364             | 827             |
+| dic              | l_quantity-int32.csv      | 16.14               | 22.89                | 0.71               | 884              | 384             |
+| dic              | l_suppkey-int32.csv       | 27.98               | 22.97                | 1.22               | 934              | 521             |
+| dic              | l_tax-int32.csv           | 11.45               | 22.89                | 0.50               | 1238             | 338             |
+| dic              | l_discount-int64.csv      | 11.97               | 45.79                | 0.26               | 797              | 479             |
+| dic              | l_extendedprice-int64.csv | 45.05               | 60.04                | 0.75               | 1720             | 1527            |
+| dic              | l_linenumber-int64.csv    | 11.45               | 45.79                | 0.25               | 730              | 391             |
+| dic              | l_orderkey-int64.csv      | 44.73               | 68.67                | 0.65               | 1322             | 1098            |
+| dic              | l_partkey-int64.csv       | 36.88               | 48.84                | 0.76               | 1126             | 790             |
+| dic              | l_quantity-int64.csv      | 16.14               | 45.79                | 0.35               | 874              | 509             |
+| dic              | l_suppkey-int64.csv       | 27.98               | 45.94                | 0.61               | 1019             | 645             |
+| dic              | l_tax-int64.csv           | 11.45               | 45.79                | 0.25               | 795              | 479             |
 |                  |                           |                     |                      |                    |                  |                 |
 | for              | l_linenumber-int8.csv     | 11.45               | 2.86                 | 4.00               | 740              | 161             |
 | for              | l_discount-int8.csv       | 11.97               | 3.77                 | 3.18               | 943              | 157             |
@@ -155,6 +167,7 @@ list all the function location, and application
 | for              | l_partkey-int32.csv       | 36.88               | 45.76                | 0.81               | 893              | 541             |
 | for              | l_quantity-int32.csv      | 16.14               | 6.70                 | 2.41               | 686              | 165             |
 | for              | l_suppkey-int32.csv       | 27.98               | 45.19                | 0.62               | 726              | 493             |
+| for              | l_tax-int32.csv           | 11.45               | 11.11                | 1.03               | 623              | 177             |
 | for              | l_discount-int64.csv      | 11.97               | 15.41                | 0.78               | 666              | 220             |
 | for              | l_extendedprice-int64.csv | 45.05               | 91.57                | 0.49               | 966              | 806             |
 | for              | l_linenumber-int64.csv    | 11.45               | 5.72                 | 2.00               | 594              | 154             |
@@ -162,6 +175,7 @@ list all the function location, and application
 | for              | l_partkey-int64.csv       | 36.88               | 91.51                | 0.40               | 1015             | 820             |
 | for              | l_quantity-int64.csv      | 16.14               | 7.85                 | 2.06               | 717              | 197             |
 | for              | l_suppkey-int64.csv       | 27.98               | 90.37                | 0.31               | 968              | 758             |
+| for              | l_tax-int64.csv           | 11.45               | 17.58                | 0.65               | 668              | 225             |
 |                  |                           |                     |                      |                    |                  |                 |
 | dif              | l_discount-int8.csv       | 11.97               | 4.41                 | 2.71               | 637              | 145             |
 | dif              | l_linenumber-int8.csv     | 11.45               | 3.23                 | 3.55               | 708              | 127             |
@@ -187,6 +201,7 @@ list all the function location, and application
 | dif              | l_partkey-int64.csv       | 36.88               | 91.51                | 0.40               | 978              | 827             |
 | dif              | l_quantity-int64.csv      | 16.14               | 7.79                 | 2.07               | 732              | 192             |
 | dif              | l_suppkey-int64.csv       | 27.98               | 90.39                | 0.31               | 870              | 781             |
+| dif              | l_tax-int64.csv           | 11.45               | 16.25                | 0.70               | 664              | 219             |
 
 ### 3.3 Analysis of different compression techs
 
