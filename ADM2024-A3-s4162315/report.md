@@ -117,11 +117,25 @@ list all the function location, and application
 | rle              | l_suppkey-int64.csv       | 27.98               | 51.50                | 0.54               | 1083             | 555             |
 | rle              | l_tax-int64.csv           | 11.45               | 45.79                | 0.25               | 839              | 426             |
 |                  |                           |                     |                      |                    |                  |                 |
-| dic              | l_comment-string.csv      | 157.35              | 204.39               | 0.77               | 4268             | 15544           |
-| dic              | l_commitdate-string.csv   | 62.96               | 26.05                | 2.42               | 1611             | 10248           |
-| dic              | l_returnflag-string.csv   | 11.45               | 11.45                | 1.00               | 985              | 9738            |
-| dic              | l_shipinstruct-string.csv | 74.39               | 11.45                | 6.50               | 1393             | 11590           |
-| dic              | l_shipmode-string.csv     | 30.25               | 11.45                | 2.64               | 1349             | 9773            |
+| dic              | l_comment-string.csv      | 157.35              | 211.08               | 0.75               | 23826            | 15814           |
+| dic              | l_commitdate-string.csv   | 62.96               | 26.05                | 2.42               | 11245            | 10027           |
+|                  | l_linestatus-string.csv   | 11.45               | 11.45                | 1.00               | 10347            | 9395            |
+|                  | l_receiptdate-string.csv  | 62.96               | 26.07                | 2.41               | 11796            | 9840            |
+| dic              | l_returnflag-string.csv   | 11.45               | 11.45                | 1.00               | 10783            | 9377            |
+|                  | l_shipdate-string.csv     | 62.96               | 26.07                | 2.41               | 11326            | 10834           |
+| dic              | l_shipinstruct-string.csv | 74.39               | 11.45                | 6.50               | 10584            | 9932            |
+| dic              | l_shipmode-string.csv     | 30.25               | 11.45                | 2.64               | 11404            | 9457            |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
+|                  |                           |                     |                      |                    |                  |                 |
 | dic              | l_discount-int8.csv       | 11.97               | 12.49                | 0.96               | 1073             | 10095           |
 | dic              | l_extendedprice-int32.csv | 45.05               | 52.34                | 0.86               | 3576             | 15216           |
 |                  |                           |                     |                      |                    |                  |                 |
