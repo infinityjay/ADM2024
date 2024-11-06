@@ -2,11 +2,13 @@ package encode
 
 import (
 	"ADM2024/pkg/common"
+	"bytes"
 	"encoding/binary"
 	"encoding/csv"
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -111,17 +113,159 @@ func dicStr(rows [][]string, file *os.File) error {
 }
 
 func dicInt8(rows [][]string) []byte {
-	return nil
+	var encoded bytes.Buffer
+	keyMap := make(map[int8]int8)
+	uniqueKey := int8(1)
+	var encodeRows []int8
+
+	for _, row := range rows {
+		valueInt, _ := strconv.Atoi(row[0])
+		value := int8(valueInt)
+		if val, ok := keyMap[value]; ok {
+			encodeRows = append(encodeRows, val)
+		} else {
+			keyMap[value] = uniqueKey
+			encodeRows = append(encodeRows, uniqueKey)
+			uniqueKey++
+		}
+	}
+	// encode map size
+	encoded.WriteByte(byte(int8(len(keyMap))))
+	// encode map
+	for key, value := range keyMap {
+		encoded.WriteByte(byte(key))
+		encoded.WriteByte(byte(value))
+	}
+	// encode value
+	for _, row := range encodeRows {
+		encoded.WriteByte(byte(row))
+	}
+	return encoded.Bytes()
 }
 
 func dicInt16(rows [][]string) []byte {
-	return nil
+	var encoded bytes.Buffer
+	keyMap := make(map[int16]int16)
+	uniqueKey := int16(1)
+	var encodeRows []int16
+
+	for _, row := range rows {
+		valueInt, _ := strconv.Atoi(row[0])
+		value := int16(valueInt)
+		if val, ok := keyMap[value]; ok {
+			encodeRows = append(encodeRows, val)
+		} else {
+			keyMap[value] = uniqueKey
+			encodeRows = append(encodeRows, uniqueKey)
+			uniqueKey++
+		}
+	}
+	// encode map size
+	lenMap := int16(len(keyMap))
+	encoded.Write([]byte{byte(lenMap), byte(lenMap >> 8)})
+	// encode map
+	for key, value := range keyMap {
+		encoded.Write([]byte{byte(key), byte(key >> 8)})
+		encoded.Write([]byte{byte(value), byte(value >> 8)})
+	}
+	// encode value
+	for _, row := range encodeRows {
+		encoded.Write([]byte{byte(row), byte(row >> 8)})
+	}
+	return encoded.Bytes()
 }
 
 func dicInt32(rows [][]string) []byte {
-	return nil
+	var encoded bytes.Buffer
+	keyMap := make(map[int32]int32)
+	uniqueKey := int32(1)
+	var encodeRows []int32
+
+	for _, row := range rows {
+		valueInt, _ := strconv.Atoi(row[0])
+		value := int32(valueInt)
+		if val, ok := keyMap[value]; ok {
+			encodeRows = append(encodeRows, val)
+		} else {
+			keyMap[value] = uniqueKey
+			encodeRows = append(encodeRows, uniqueKey)
+			uniqueKey++
+		}
+	}
+	// encode map size
+	lenMap := int32(len(keyMap))
+	encoded.Write([]byte{
+		byte(lenMap >> 24), byte(lenMap >> 16),
+		byte(lenMap >> 8), byte(lenMap),
+	})
+	// encode map
+	for key, value := range keyMap {
+		encoded.Write([]byte{
+			byte(key >> 24), byte(key >> 16),
+			byte(key >> 8), byte(key),
+		})
+		encoded.Write([]byte{
+			byte(value >> 24), byte(value >> 16),
+			byte(value >> 8), byte(value),
+		})
+	}
+	// encode value
+	for _, row := range encodeRows {
+		encoded.Write([]byte{
+			byte(row >> 24), byte(row >> 16),
+			byte(row >> 8), byte(row),
+		})
+	}
+	return encoded.Bytes()
 }
 
 func dicInt64(rows [][]string) []byte {
-	return nil
+	var encoded bytes.Buffer
+	keyMap := make(map[int64]int64)
+	uniqueKey := int64(1)
+	var encodeRows []int64
+
+	for _, row := range rows {
+		value, _ := strconv.ParseInt(row[0], 10, 64)
+		if val, ok := keyMap[value]; ok {
+			encodeRows = append(encodeRows, val)
+		} else {
+			keyMap[value] = uniqueKey
+			encodeRows = append(encodeRows, uniqueKey)
+			uniqueKey++
+		}
+	}
+	// encode map size
+	lenMap := int64(len(keyMap))
+	encoded.Write([]byte{
+		byte(lenMap >> 56), byte(lenMap >> 48),
+		byte(lenMap >> 40), byte(lenMap >> 32),
+		byte(lenMap >> 24), byte(lenMap >> 16),
+		byte(lenMap >> 8), byte(lenMap),
+	})
+	// encode map
+	for key, value := range keyMap {
+		encoded.Write([]byte{
+			byte(key >> 56), byte(key >> 48),
+			byte(key >> 40), byte(key >> 32),
+			byte(key >> 24), byte(key >> 16),
+			byte(key >> 8), byte(key),
+		})
+		encoded.Write([]byte{
+			byte(value >> 56), byte(value >> 48),
+			byte(value >> 40), byte(value >> 32),
+			byte(value >> 24), byte(value >> 16),
+			byte(value >> 8), byte(value),
+		})
+	}
+	// encode value
+	for _, row := range encodeRows {
+		encoded.Write([]byte{
+			byte(row >> 56), byte(row >> 48),
+			byte(row >> 40), byte(row >> 32),
+			byte(row >> 24), byte(row >> 16),
+			byte(row >> 8), byte(row),
+		})
+	}
+	return encoded.Bytes()
 }

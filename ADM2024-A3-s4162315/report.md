@@ -125,7 +125,7 @@ list all the function location, and application
 |                  | l_shipdate-string.csv     | 62.96               | 26.07                | 2.41               | 11326            | 10834           |
 | dic              | l_shipinstruct-string.csv | 74.39               | 11.45                | 6.50               | 10584            | 9932            |
 | dic              | l_shipmode-string.csv     | 30.25               | 11.45                | 2.64               | 11404            | 9457            |
-|                  |                           |                     |                      |                    |                  |                 |
+|                  | l_discount-int8.csv       | 11.97               | 5.72                 | 2.09               | 698              | 262             |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |
 |                  |                           |                     |                      |                    |                  |                 |

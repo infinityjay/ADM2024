@@ -128,7 +128,6 @@ func dicStr(file *os.File, outputFile *os.File) error {
 					return fmt.Errorf("failed to write to CSV: %v", err)
 				}
 			} else {
-				fmt.Printf("map not ok i: %v\n, line: %v\n", i, line)
 				return fmt.Errorf("map is incomplete")
 			}
 
@@ -139,6 +138,29 @@ func dicStr(file *os.File, outputFile *os.File) error {
 }
 
 func dicInt8(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	mapSize := int(buff[0])
+	preKey := int8(0)
+	keyMap := make(map[int8]int8)
+	for i := 1; i < n; i++ {
+		if i <= mapSize*2 {
+			if i%2 != 0 {
+				preKey = int8(buff[i])
+			} else {
+				value := int8(buff[i])
+				keyMap[value] = preKey
+			}
+		} else {
+			value := int8(buff[i])
+			if val, ok := keyMap[value]; ok {
+				if err := writer.Write([]string{strconv.Itoa(int(val))}); err != nil {
+					return fmt.Errorf("failed to write to CSV: %v", err)
+				}
+			} else {
+				return fmt.Errorf("map is incomplete")
+			}
+		}
+	}
 	return nil
 }
 
