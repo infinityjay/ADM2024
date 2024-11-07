@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func Binary(datatype, filepath string) error {
@@ -60,17 +61,46 @@ func Binary(datatype, filepath string) error {
 }
 
 func binInt8(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	for i := 0; i < n; i++ {
+		value := int8(buff[i])
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
 	return nil
 }
 
 func binInt16(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	for i := 0; i < n; i += 2 {
+		value := int16(buff[i]) | int16(buff[i+1])<<8
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
 	return nil
 }
 
 func binInt32(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	for i := 0; i < n; i += 4 {
+		value := int32(buff[i])<<24 | int32(buff[i+1])<<16 | int32(buff[i+2])<<8 | int32(buff[i+3])
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
 	return nil
 }
 
 func binInt64(buff []byte, writer *csv.Writer) error {
+	n := len(buff)
+	for i := 0; i < n; i += 8 {
+		value := int64(buff[i])<<56 | int64(buff[i+1])<<48 | int64(buff[i+2])<<40 | int64(buff[i+3])<<32 |
+			int64(buff[i+4])<<24 | int64(buff[i+5])<<16 | int64(buff[i+6])<<8 | int64(buff[i+7])
+		if err := writer.Write([]string{strconv.Itoa(int(value))}); err != nil {
+			return fmt.Errorf("failed to write to CSV: %v", err)
+		}
+	}
 	return nil
 }

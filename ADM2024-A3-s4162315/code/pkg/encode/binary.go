@@ -2,11 +2,13 @@ package encode
 
 import (
 	"ADM2024/pkg/common"
+	"bytes"
 	"encoding/binary"
 	"encoding/csv"
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func Binary(datatype, filepath string) error {
@@ -66,17 +68,52 @@ func Binary(datatype, filepath string) error {
 }
 
 func binInt8(rows [][]string) []byte {
-	return nil
+	var packedData bytes.Buffer
+	n := len(rows)
+	for i := 0; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int8(valueInt)
+		packedData.WriteByte(byte(value))
+	}
+	return packedData.Bytes()
 }
 
 func binInt16(rows [][]string) []byte {
-	return nil
+	var packedData bytes.Buffer
+	n := len(rows)
+	for i := 0; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int16(valueInt)
+		packedData.Write([]byte{byte(value), byte(value >> 8)})
+	}
+	return packedData.Bytes()
 }
 
 func binInt32(rows [][]string) []byte {
-	return nil
+	var packedData bytes.Buffer
+	n := len(rows)
+	for i := 0; i < n; i++ {
+		valueInt, _ := strconv.Atoi(rows[i][0])
+		value := int32(valueInt)
+		packedData.Write([]byte{
+			byte(value >> 24), byte(value >> 16),
+			byte(value >> 8), byte(value),
+		})
+	}
+	return packedData.Bytes()
 }
 
 func binInt64(rows [][]string) []byte {
-	return nil
+	var packedData bytes.Buffer
+	n := len(rows)
+	for i := 0; i < n; i++ {
+		value, _ := strconv.ParseInt(rows[i][0], 10, 64)
+		packedData.Write([]byte{
+			byte(value >> 56), byte(value >> 48),
+			byte(value >> 40), byte(value >> 32),
+			byte(value >> 24), byte(value >> 16),
+			byte(value >> 8), byte(value),
+		})
+	}
+	return packedData.Bytes()
 }

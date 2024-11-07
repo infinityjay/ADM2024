@@ -75,31 +75,57 @@ list all the function location, and application
 
 | Compression tech | Input file name           | Input file size(MB) | Output file size(MB)         | Compression ratio* | Encode  time(ms) | Decode time(ms) |
 | ---------------- | ------------------------- | ------------------- | ---------------------------- | ------------------ | ---------------- | --------------- |
-| bin              | l_discount-int8.csv       | 11.97               | 7.87                         | 1.52               | 787              | 239             |
-| bin              | l_linenumber-int8.csv     | 11.45               | 5.01                         | 2.29               | 797              | 198             |
-| bin              | l_quantity-int8.csv       | 16.14               | 35.77                        | 0.45               | 1009             | 583             |
-| bin              | l_tax-int8.csv            | 11.45               | 6.44                         | 1.78               | 820              | 220             |
-| bin              | l_discount-int16.csv      | 11.97               | 7.87                         | 1.52               | 788              | 243             |
-| bin              | l_linenumber-int16.csv    | 11.45               | 5.01                         | 2.29               | 810              | 197             |
-| bin              | l_quantity-int16.csv      | 16.14               | 35.77                        | 0.45               | 1046             | 588             |
-| bin              | l_suppkey-int16.csv       | 27.98               | 7154.03                      | 0.00               | 33017            | 93645           |
-| bin              | l_tax-int16.csv           | 11.45               | 6.44                         | 1.78               | 812              | 216             |
-| bin              | l_discount-int32.csv      | 11.97               | 7.87                         | 1.52               | 800              | 243             |
-| bin              | l_extendedprice-int32.csv | 45.05               | too large... process crashed |                    |                  |                 |
-| bin              | l_linenumber-int32.csv    | 11.45               | 5.01                         | 2.29               | 677              | 198             |
-| bin              | l_orderkey-int32.csv      | 44.73               | too large...                 |                    |                  |                 |
-| bin              | l_partkey-int32.csv       | 36.88               | too large...                 |                    |                  |                 |
-| bin              | l_quantity-int32.csv      | 16.14               | 35.77                        | 0.45               | 1084             | 587             |
-| bin              | l_suppkey-int32.csv       | 27.98               | 7154.05                      | 0.00               | 32914            | 98029           |
-| bin              | l_tax-int32.csv           | 11.45               | 6.44                         | 1.78               | 783              | 224             |
-| bin              | l_discount-int64.csv      | 11.97               | 7.87                         | 1.52               | 740              | 245             |
-| bin              | l_extendedprice-int64.csv | 45.05               | too large...                 |                    |                  |                 |
-| bin              | l_linenumber-int64.csv    | 11.45               | 5.01                         | 2.29               | 695              | 201             |
-| bin              | l_orderkey-int64.csv      | 44.73               | too large...                 |                    |                  |                 |
-| bin              | l_partkey-int64.csv       | 36.88               | too large...                 |                    |                  |                 |
-| bin              | l_quantity-int64.csv      | 14.14               | 35.77                        | 0.45               | 1268             | 977             |
-| bin              | l_suppkey-int64.csv       | 27.98               | 7154.08                      | 0.00               | 31642            | 89910           |
-| bin              | l_tax-int64.csv           | 11.45               | 6.44                         | 1.78               | 742              | 222             |
+| bin              | l_discount-int8.csv       | 11.97               | 5.72                         | 2.09               | 656              | 146             |
+| bin              | l_linenumber-int8.csv     | 11.45               | 5.72                         | 2.00               | 618              | 142             |
+| bin              | l_quantity-int8.csv       | 16.14               | 5.72                         | 2.82               | 758              | 159             |
+| bin              | l_tax-int8.csv            | 11.45               | 5.72                         | 2.00               | 605              | 136             |
+| bin              | l_discount-int16.csv      | 11.97               | 11.45                        | 1.05               | 582              | 172             |
+| bin              | l_linenumber-int16.csv    | 11.45               | 11.45                        | 1.00               | 635              | 167             |
+| bin              | l_quantity-int16.csv      | 16.14               | 11.45                        | 1.41               | 753              | 194             |
+| bin              | l_suppkey-int16.csv       | 27.98               | 11.45                        | 2.44               | 833              | 302             |
+| bin              | l_tax-int16.csv           | 11.45               | 11.45                        | 1.00               | 637              | 171             |
+| bin              | l_discount-int32.csv      | 11.97               | 22.89                        | 0.52               | 672              | 247             |
+| bin              | l_extendedprice-int32.csv | 45.05               | 22.89                        | 1.97               | 862              | 424             |
+| bin              | l_linenumber-int32.csv    | 11.45               | 22.89                        | 0.50               | 627              | 245             |
+| bin              | l_orderkey-int32.csv      | 44.73               | 22.89                        | 1.95               | 781              | 420             |
+| bin              | l_partkey-int32.csv       | 36.88               | 22.89                        | 1.61               | 959              | 423             |
+| bin              | l_quantity-int32.csv      | 16.14               | 22.89                        | 0.71               | 764              | 259             |
+| bin              | l_suppkey-int32.csv       | 27.98               | 22.89                        | 1.22               | 817              | 371             |
+| bin              | l_tax-int32.csv           | 11.45               | 22.89                        | 0.50               | 609              | 238             |
+| bin              | l_discount-int64.csv      | 11.97               | 45.79                        | 0.26               | 700              | 385             |
+| bin              | l_extendedprice-int64.csv | 45.05               | 45.79                        | 0.98               | 881              | 523             |
+| bin              | l_linenumber-int64.csv    | 11.45               | 45.79                        | 0.25               | 592              | 355             |
+| bin              | l_orderkey-int64.csv      | 44.73               | 45.79                        | 0.98               | 794              | 514             |
+| bin              | l_partkey-int64.csv       | 36.88               | 45.79                        | 0.81               | 1002             | 522             |
+| bin              | l_quantity-int64.csv      | 16.14               | 45.79                        | 0.35               | 721              | 375             |
+| bin              | l_suppkey-int64.csv       | 27.98               | 45.79                        | 0.61               | 827              | 477             |
+| bin              | l_tax-int64.csv           | 11.45               | 45.79                        | 0.25               | 591              | 356             |
+|                  |                           |                     |                              |                    |                  |                 |
+| bve              | l_discount-int8.csv       | 11.97               | 7.87                         | 1.52               | 787              | 239             |
+| bve              | l_linenumber-int8.csv     | 11.45               | 5.01                         | 2.29               | 797              | 198             |
+| bve              | l_quantity-int8.csv       | 16.14               | 35.77                        | 0.45               | 1009             | 583             |
+| bve              | l_tax-int8.csv            | 11.45               | 6.44                         | 1.78               | 820              | 220             |
+| bve              | l_discount-int16.csv      | 11.97               | 7.87                         | 1.52               | 788              | 243             |
+| bve              | l_linenumber-int16.csv    | 11.45               | 5.01                         | 2.29               | 810              | 197             |
+| bve              | l_quantity-int16.csv      | 16.14               | 35.77                        | 0.45               | 1046             | 588             |
+| bve              | l_suppkey-int16.csv       | 27.98               | 7154.03                      | 0.00               | 33017            | 93645           |
+| bve              | l_tax-int16.csv           | 11.45               | 6.44                         | 1.78               | 812              | 216             |
+| bve              | l_discount-int32.csv      | 11.97               | 7.87                         | 1.52               | 800              | 243             |
+| bve              | l_extendedprice-int32.csv | 45.05               | too large... process crashed |                    |                  |                 |
+| bve              | l_linenumber-int32.csv    | 11.45               | 5.01                         | 2.29               | 677              | 198             |
+| bve              | l_orderkey-int32.csv      | 44.73               | too large...                 |                    |                  |                 |
+| bve              | l_partkey-int32.csv       | 36.88               | too large...                 |                    |                  |                 |
+| bve              | l_quantity-int32.csv      | 16.14               | 35.77                        | 0.45               | 1084             | 587             |
+| bve              | l_suppkey-int32.csv       | 27.98               | 7154.05                      | 0.00               | 32914            | 98029           |
+| bve              | l_tax-int32.csv           | 11.45               | 6.44                         | 1.78               | 783              | 224             |
+| bve              | l_discount-int64.csv      | 11.97               | 7.87                         | 1.52               | 740              | 245             |
+| bve              | l_extendedprice-int64.csv | 45.05               | too large...                 |                    |                  |                 |
+| bve              | l_linenumber-int64.csv    | 11.45               | 5.01                         | 2.29               | 695              | 201             |
+| bve              | l_orderkey-int64.csv      | 44.73               | too large...                 |                    |                  |                 |
+| bve              | l_partkey-int64.csv       | 36.88               | too large...                 |                    |                  |                 |
+| bve              | l_quantity-int64.csv      | 16.14               | 35.77                        | 0.45               | 1268             | 977             |
+| bve              | l_suppkey-int64.csv       | 27.98               | 7154.08                      | 0.00               | 31642            | 89910           |
+| bve              | l_tax-int64.csv           | 11.45               | 6.44                         | 1.78               | 742              | 222             |
 |                  |                           |                     |                              |                    |                  |                 |
 | rle              | l_comment-string.csv      | 157.35              | 168.80                       | 0.93               | 13268            | 12141           |
 | rle              | l_commitdate-string.csv   | 62.96               | 73.48                        | 0.86               | 13333            | 10214           |
