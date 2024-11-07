@@ -15,7 +15,7 @@ const (
 func ValidateDataType(tech string, dataType string) error {
 	integerTypes := map[string]bool{"int8": true, "int16": true, "int32": true, "int64": true}
 	switch tech {
-	case "bin", "for", "dif":
+	case "bin", "for", "dif", "bve":
 		if !integerTypes[dataType] {
 			return fmt.Errorf("compression type '%s' supports integer types only", tech)
 		}
